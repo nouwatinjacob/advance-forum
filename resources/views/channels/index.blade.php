@@ -22,16 +22,22 @@
                        
                           @foreach($channels as $channel)
                           <tr>
-                          <td>{{ $channel->title }}</td>                          
-                          <td>
+                          <td>{{ $channel->title }}</td> 
+                                                   
+                          <td> 
+                                    
+                           <form action="{{ route('channels.destroy', ['channel' => $channel->id])}}" method="POST">
                               <a href="{{ route('channels.edit', ['channel' => $channel->id])}}" class="btn btn-xs btn-primary">Edit</a>
-                              <a href="{{ route('channels.destroy', ['channel' => $channel->id])}}" class="btn btn-xs btn-danger">Delete</a>
+                              {{csrf_field()}}
+                              {{ method_field('DELETE') }}
+                              <button class="btn btn-xs btn-danger" type="submit">Delete</button>
+                           </form>                              
                           </td>                                                      
                           </tr>
                           @endforeach
                         @else 
                         <tr>
-                          <th colspan=5 class="text-center">No Channels registered yet</th>                        </tr>
+                          <th colspan=5 class="text-center">No Channels registered yet</th>      
                         </tr>                         
                       </tbody>
                       @endif

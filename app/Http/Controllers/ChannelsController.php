@@ -100,6 +100,10 @@ class ChannelsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Channel::destroy($id);
+
+        Session::flash('success', 'Channel deleted');
+
+        return redirect()->route('channels.index');
     }
 }
