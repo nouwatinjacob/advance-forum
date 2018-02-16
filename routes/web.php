@@ -17,12 +17,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/forum', 'ForumsController@index')->name('forum');
 
 Route::get('/{provider}/auth', 'SocialsController@auth')->name('social.auth');
 
 Route::get('/{provider}/redirect', 'SocialsController@auth_callback')->name('social.callback');
 
 Route::group(['middleware' => 'auth'], function(){
+
     Route::resource('channels', 'ChannelsController');
+
+    Route::get('/forum', 'ForumsController@index')->name('forum');
+
+    Route::get('/discussion/create', 'DiscussionsController@create')->name('discussions.create');
+
+    Route::post('/discussion/store', 'DiscussionsController@store')->name('discussions.store');
+
+    Route::get('/discussion/{slug}', 'DiscussionsController@show')->name('discussion');
 });
