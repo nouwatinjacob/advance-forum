@@ -14,9 +14,10 @@
                 </div>
 
                 <div class="panel-footer">
-                    <p>
+                    <span>
                         {{$discussion->replies->count()}} Replies
-                    </p>
+                    </span>
+                    <a href="{{route('channel', ['slug' => $discussion->channel->slug])}}" class="pull-right btn btn-sm btn-default">{{$discussion->channel->title}}</a>
                 </div>
                 
             </div>
