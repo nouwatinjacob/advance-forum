@@ -13,13 +13,13 @@ class ChannelsTableSeeder extends Seeder
      */
     public function run()
     {
-        $channel1 = ['title' => 'Laravel'];
-        $channel2 = ['title' => 'PHP'];
-        $channel3 = ['title' => 'Lumen'];
-        $channel4 = ['title' => 'Codeignite'];
-        $channel5 = ['title' => 'Forge'];
-        $channel6 = ['title' => 'Spark'];
-        $channel7 = ['title' => 'Javascript'];
+        $channel1 = ['title' => 'Laravel', 'slug' => str_slug('Laravel')];
+        $channel2 = ['title' => 'PHP', 'slug' => str_slug('PHP')];
+        $channel3 = ['title' => 'Lumen', 'slug' => str_slug('Lumen')];
+        $channel4 = ['title' => 'Codeignite', 'slug' => str_slug('Codeignite')];
+        $channel5 = ['title' => 'Forge', 'slug' => str_slug('Forge')];
+        $channel6 = ['title' => 'Spark', 'slug' => str_slug('Spark')];
+        $channel7 = ['title' => 'Javascript', 'slug' => str_slug('Javascript')];
 
         Channel::create($channel1);
         Channel::create($channel2);
