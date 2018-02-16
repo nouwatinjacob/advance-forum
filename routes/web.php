@@ -15,23 +15,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/forum', 'ForumsController@index')->name('forum');
+
+Route::get('/channel/{slug}', 'ForumsController@channel')->name('channel');
+
+Route::get('/discussion/{slug}', 'DiscussionsController@show')->name('discussion');
+
 Auth::routes();
 
-Route::get('/forum', 'ForumsController@index')->name('forum');
+// Routes for Social Authentication
 
 Route::get('/{provider}/auth', 'SocialsController@auth')->name('social.auth');
 
 Route::get('/{provider}/redirect', 'SocialsController@auth_callback')->name('social.callback');
 
+// Protected Routes
+
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::resource('channels', 'ChannelsController');
+    Route::resource('channels', 'ChannelsController');    
 
-    Route::get('/forum', 'ForumsController@index')->name('forum');
+    Route::get('/discussion/create/new', 'DiscussionsController@create')->name('discussions.create');
 
-    Route::get('/discussion/create', 'DiscussionsController@create')->name('discussions.create');
+    Route::post('/discussion/store', 'DiscussionsController@store')->name('discussions.store');    
+    
+    Route::post('/discussion/reply/{id}', 'DiscussionsController@reply')->name('discussion.reply');
 
-    Route::post('/discussion/store', 'DiscussionsController@store')->name('discussions.store');
+    Route::get('/reply/like/{id}', 'RepliesController@like')->name('reply.like');
 
-    Route::get('/discussion/{slug}', 'DiscussionsController@show')->name('discussion');
+    Route::get('/reply/unlike/{id}', 'RepliesController@unlike')->name('reply.unlike');
+
 });
