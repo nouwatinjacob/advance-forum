@@ -73,6 +73,7 @@
 
         <div class="container">
             <div class="row">
+                @if(Auth::user())
                 <div class="col-md-4">
                     <a href="{{route('discussions.create')}}" class="btn btn-primary form-control">Create a new Discussion</a>
                     <br><br>
@@ -89,6 +90,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <div class="col-md-8">
                     @yield('content')
                 </div>
