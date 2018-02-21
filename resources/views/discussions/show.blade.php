@@ -18,6 +18,7 @@
                 @if($best_answer)
                 <div class="text-center">
                     <div class="panel panel-success">
+                        <h3 class="text-center">BEST ANSWER</h3>
                         <div class="panel-heading">
                             <img src="{{ $best_answer->user->avatar }}" alt="" width="35px" height="35px">&nbsp;&nbsp;&nbsp;
                             <span>{{$best_answer->user->name}}</span>
