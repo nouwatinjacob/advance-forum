@@ -14,7 +14,20 @@
             </div>
             <div class="panel-body">
                 <h4 class="text-center">{{$discussion->title}}</h4><hr>
-                <p>{{$discussion->content}}</p>
+                <p>{{$discussion->content}}</p><hr>
+                @if($best_answer)
+                <div class="text-center">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <img src="{{ $best_answer->user->avatar }}" alt="" width="35px" height="35px">&nbsp;&nbsp;&nbsp;
+                            <span>{{$best_answer->user->name}}</span>
+                        </div>
+                        <div class="panel-body">
+                            {{$best_answer->content}}
+                        </div>
+                    </div> 
+                </div>                
+                @endif
             </div>
             <div class="panel-footer">
                <span>
@@ -30,7 +43,9 @@
             <div class="panel-heading">
                 <img src="{{ $reply->user->avatar }}" alt="" width="35px" height="35px">&nbsp;&nbsp;&nbsp;
                 <span>{{$reply->user->name}}, <b>{{$reply->created_at->diffForHumans()}}</b></span>
-                
+                @if(!$best_answer)
+                <a href="{{route('best.answer', ['id' => $reply->id])}}" class="btn btn-sm btn-info pull-right">mark as best answer</a>
+                @endif
             </div>
             <div class="panel-body">               
                 <p>{{$reply->content}}</p>

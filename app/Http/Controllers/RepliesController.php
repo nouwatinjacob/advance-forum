@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Like;
 use Auth;
+use App\Reply;
+use Session;
 
 class RepliesController extends Controller
 {
@@ -29,6 +31,18 @@ class RepliesController extends Controller
         $like->delete();
 
         session()->flash('success', 'You just unliked this reply' );
+
+        return redirect()->back();
+    }
+
+    public function best_answer($id)
+    {
+        $reply = Reply::find($id);
+
+        $reply->best_answer = 1;
+        $reply->save();
+
+        Session::flash('success', 'Reply as been marked as the best answer');
 
         return redirect()->back();
     }
