@@ -33,8 +33,8 @@ Route::get('/{provider}/redirect', 'SocialsController@auth_callback')->name('soc
 
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::resource('channels', 'ChannelsController');    
-
+    Route::resource('channels', 'ChannelsController');
+    
     Route::get('/discussion/create/new', 'DiscussionsController@create')->name('discussions.create');
 
     Route::post('/discussion/store', 'DiscussionsController@store')->name('discussions.store');    

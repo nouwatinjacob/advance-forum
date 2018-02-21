@@ -82,6 +82,9 @@
                             <div class="panel-body">
                                 <ul class="list-group">                                   
                                     <a href="{{route('forum')}}" style="text-decoration: none;"><li class="list-group-item">Home</li></a>
+                                    @if(Auth::id() == 1)
+                                    <a href="{{route('channels.index')}}" style="text-decoration: none;"><li class="list-group-item">Channels</li></a>
+                                    @endif
                                 </ul>
                             </div>
                     </div>
