@@ -6,7 +6,11 @@
             <div class="panel-heading">
                 <img src="{{ $discussion->user->avatar }}" alt="" width="60px" height="60px">&nbsp;&nbsp;&nbsp;
                 <span>{{$discussion->user->name}}, <b>{{$discussion->created_at->diffForHumans()}}</b></span>
-                <a href="{{route('discussion', ['slug' => $discussion->slug])}}" class="btn btn-default pull-right">View</a>
+                @if($discussion->is_being_watched_by_auth_user())
+                    <a href="{{route('discussion.unwatch', ['id' => $discussion->id])}}" class="btn btn-default btn-sm pull-right">UnWatch</a>
+                @else
+                    <a href="{{route('discussion.watch', ['id' => $discussion->id])}}" class="btn btn-default btn-sm pull-right">Watch</a>
+                @endif
             </div>
             <div class="panel-body">
                 <h4 class="text-center">{{$discussion->title}}</h4><hr>
