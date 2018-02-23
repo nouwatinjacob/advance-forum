@@ -6,10 +6,22 @@
             <div class="panel-heading">
                 <img src="{{ $discussion->user->avatar }}" alt="" width="60px" height="60px">&nbsp;&nbsp;&nbsp;
                 <span>{{$discussion->user->name}}<b>({{$discussion->user->points}})</b>,&nbsp;&nbsp;&nbsp; <b>{{$discussion->created_at->diffForHumans()}}</b></span>
-                @if($discussion->is_being_watched_by_auth_user())
-                    <a href="{{route('discussion.unwatch', ['id' => $discussion->id])}}" class="btn btn-default btn-sm pull-right">UnWatch</a>
+                @if($discussion->hasBestAnswer())
+                    <a class="btn btn-xs btn-success pull-right">CLOSED</a>
                 @else
-                    <a href="{{route('discussion.watch', ['id' => $discussion->id])}}" class="btn btn-default btn-sm pull-right">Watch</a>
+                    <a class="btn btn-xs btn-danger pull-right" >OPEN</a>
+                @endif
+
+                @if(Auth::id() == $discussion->user->id)
+                @if(!$discussion->hasBestAnswer())
+                <a href="{{route('discussion.edit', ['slug' => $discussion->slug])}}" class="btn btn-default btn-xs pull-right" style="margin-right:5px">Edit</a>    
+                @endif
+                @endif
+
+                @if($discussion->is_being_watched_by_auth_user())
+                    <a href="{{route('discussion.unwatch', ['id' => $discussion->id])}}" class="btn btn-default btn-xs pull-right" style="margin-right:5px">UnWatch</a>
+                @else
+                    <a href="{{route('discussion.watch', ['id' => $discussion->id])}}" class="btn btn-default btn-xs pull-right" style="margin-right:5px">Watch</a>
                 @endif
             </div>
             <div class="panel-body">
@@ -46,7 +58,13 @@
                 <span>{{$reply->user->name}}<b>({{ $reply->user->points }})</b>,&nbsp;&nbsp;&nbsp; <b>{{$reply->created_at->diffForHumans()}}</b></span>
                 @if(!$best_answer)
                     @if(Auth::id() == $reply->user->id)
-                        <a href="{{route('best.answer', ['id' => $reply->id])}}" class="btn btn-sm btn-info pull-right">mark as best answer</a>
+                        <a href="{{route('best.answer', ['id' => $reply->id])}}" class="btn btn-sm btn-info pull-right" >mark as best answer</a>
+                    @endif   
+                @endif
+
+                @if(Auth::id() == $reply->user->id)
+                    @if(!$reply->best_answer)
+                        <a href="{{route('reply.edit', ['id' => $reply->id])}}" class="btn btn-sm btn-default pull-right" style="margin-right:5px;">Edit</a>
                     @endif   
                 @endif
             </div>
