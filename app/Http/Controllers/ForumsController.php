@@ -8,6 +8,7 @@ use Illuminate\Pagination\Paginator;
 use App\Discussion;
 use App\Channel;
 use Auth;
+use App\Reply;
 
 class ForumsController extends Controller
 {
@@ -21,35 +22,24 @@ class ForumsController extends Controller
             break;
 
             case 'solved':
-                $answered = array();
+                $answered = Discussion::whereIn('id',
+                Reply::where('best_answer', true)->pluck('discussion_id')->toArray()); 
 
-                foreach(Discussion::all() as $discussion):
-                    if($discussion->hasBestAnswer())
-                    {
-                        array_push($answered, $discussion);
-                    }
-                endforeach; 
-                
-                $results = new Paginator($answered, 3);
+                $results = $answered->paginate(3);
             break;
 
-            case 'unsolved':
-                $unanswered = array();
+            case 'unsolved': 
+                $unanswered = Discussion::whereNotIn('id',
+                Reply::where('best_answer', true)->pluck('discussion_id')->toArray()); 
 
-                foreach(Discussion::all() as $discussion):
-                    if(!$discussion->hasBestAnswer())
-                    {
-                        array_push($unanswered, $discussion);
-                    }
-                endforeach; 
-                
-                $results = new Paginator($unanswered, 3);
+                $results = $unanswered->paginate(3);            
             break;
+
             default:
                 $results = Discussion::orderBy('created_at', 'desc')->paginate(3);
             break;
         }
-        return view('forum', ['discussions' => $results]);
+        return view('forum', ['discussions' => $results, 'filter' => request('filter')]);
     }
 
     public function channel($slug)

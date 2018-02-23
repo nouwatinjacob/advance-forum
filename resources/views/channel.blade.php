@@ -5,7 +5,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <img src="{{ $discussion->user->avatar }}" alt="" width="60px" height="60px">&nbsp;&nbsp;&nbsp;
-                    <span>{{$discussion->user->name}}, <b>{{$discussion->created_at->diffForHumans()}}</b></span>
+                    <span>{{$discussion->user->name}}<b>({{ $discussion->user->points }})</b>,&nbsp;&nbsp;&nbsp;<b>{{$discussion->created_at->diffForHumans()}}</b></span>
                     @if($discussion->hasBestAnswer())
                     <a class="btn btn-xs btn-success pull-right">CLOSED</a>
                     @else

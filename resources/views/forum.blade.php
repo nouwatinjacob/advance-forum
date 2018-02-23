@@ -5,12 +5,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <img src="{{ $discussion->user->avatar }}" alt="" width="60px" height="60px">&nbsp;&nbsp;&nbsp;
-                    <span>{{$discussion->user->name}}, <b>{{$discussion->created_at->diffForHumans()}}</b></span>
+                    <span>{{$discussion->user->name}}<b>({{ $discussion->user->points }})</b>,&nbsp;&nbsp;&nbsp; <b>{{$discussion->created_at->diffForHumans()}}</b></span>
                     @if($discussion->hasBestAnswer())
                     <a class="btn btn-xs btn-success pull-right">CLOSED</a>
                     @else
                     <a class="btn btn-xs btn-danger pull-right" >OPEN</a>
-                    @endif
+                    @endif 
                     <a href="{{route('discussion', ['slug' => $discussion->slug])}}" class="btn btn-default btn-xs pull-right" style="margin-right:5px">View</a>
                 </div> 
                 <div class="panel-body">
@@ -30,7 +30,8 @@
      @endforeach  
 
      <div class="text-center">
-            {{$discussions->links()}}
+        {{$discussions->appends(['filter' => $filter])->render()}}
+            <!-- {{$discussions->links()}} -->
         </div> 
 
 @endsection
