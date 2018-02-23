@@ -92,12 +92,16 @@
                             <div class="panel-body">
                                 <ul class="list-group">                                   
                                     <a href="{{route('forum')}}" style="text-decoration: none;"><li class="list-group-item">Home</li></a>
+                                 @if(Auth::check())                                    
                                     <a href="/forum?filter=me" style="text-decoration: none;"><li class="list-group-item">My Discussion</li></a>
+                                 @endif   
                                     <a href="/forum?filter=solved" style="text-decoration: none;"><li class="list-group-item">Answered Discussion</li></a>
                                     <a href="/forum?filter=unsolved" style="text-decoration: none;"><li class="list-group-item">Unanswered Discussion</li></a>
-                                    @if(Auth::id() == 1)
-                                    <a href="{{route('channels.index')}}" style="text-decoration: none;"><li class="list-group-item">Channels</li></a>
-                                    <a href="{{route('channels.create')}}" style="text-decoration: none;"><li class="list-group-item">Create new Channels</li></a>
+                                    @if(Auth::check())
+                                        @if(Auth::user()->admin)
+                                        <a href="{{route('channels.index')}}" style="text-decoration: none;"><li class="list-group-item">Channels</li></a>
+                                        <a href="{{route('channels.create')}}" style="text-decoration: none;"><li class="list-group-item">Create new Channels</li></a>
+                                        @endif
                                     @endif
                                 </ul>
                             </div>
